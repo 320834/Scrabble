@@ -16,6 +16,12 @@ public class AVLTree<E extends Comparable<E>> {
 			numOfElements = 0;
 		}
 		
+		public AVLTree(Node<E> d)
+		{
+			this.root = d;
+			numOfElements = 0;
+		}
+		
 		/**
 		 * Determines the number of elements stored in this BST.
 		 *

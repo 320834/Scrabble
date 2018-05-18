@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class WordFinder {
 	
-	private static ArrayList<AVLTree<String>> words = new ArrayList<AVLTree<String>>();
+	
 	private static ArrayList<String> listOfStrings = new ArrayList<String>();
 	private static int counter = 0;
 	
@@ -14,6 +14,8 @@ public class WordFinder {
 		String input = "abb";
 
 		findStrings(input,"","",input.length());
+		
+		inputWords("Dictionary.txt");
 		
 	}
 	
@@ -31,20 +33,7 @@ public class WordFinder {
 			String word = read.readLine();
 			counter++;
 		
-			if(index == 0)
-			{
-				words.add(new AVLTree<String>());
-			}
 			
-			
-			if(!(passed.contains(word.charAt(0) + "")))
-			{
-				words.add(new AVLTree<String>());
-				passed = passed + word.charAt(0);
-				index = index + 1;
-			}
-			
-			words.get(index).addTree(word);
 			
 		}
 		
@@ -53,6 +42,8 @@ public class WordFinder {
 		{
 			System.err.println("File Not Found");
 		}
+		
+		
 	}
 	
 
