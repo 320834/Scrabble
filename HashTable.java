@@ -20,8 +20,7 @@ public class HashTable{
 	{
 		Node<String> current = new Node<String>(word);
 		
-		
-		System.out.println(hash(word,current));
+		hash(word,current);
 	}
 	
 	public int hash(String key, Node<String> value)
@@ -79,17 +78,54 @@ public class HashTable{
 	//This method finds the word of the string 
 	public boolean find(String word)
 	{
+		int preIndex = word.hashCode();
+		
+		int index = preIndex % mod;
+		
+		if(hashTable[index] == null)
+		{
+			return false;
+		}
+		
+		if(hashTable[index].data.compareToIgnoreCase(word) == 0)
+		{
+			return true;
+		}
+		else if(hashTable[index].right != null || hashTable[index].left != null)
+		{
+			return findTree(hashTable[index],word);
+		}
+		
+		return false;
 		
 	}
 	
-	public static void main(String [] args)
+	private boolean findTree(Node<String> root, String word)
+	{
+		if(root.data.compareToIgnoreCase(word) == 0)
+		{
+			return true;
+		}
+		else if(root.data.compareToIgnoreCase(word) > 0)
+		{
+			return findTree(root.left,word);
+		}
+		else if(root.data.compareToIgnoreCase(word) < 0 )
+		{
+			return findTree(root.right,word);
+		}
+		
+		return false;
+	}
+	
+	public static void main(String args[])
 	{
 		HashTable a = new HashTable(300000);
 		
-		a.add("bceikmc");
 		a.add("ab");
+		a.add("ba");
 		
-		
+		System.out.println(a.find("aefe"));
 	}
 	
 }

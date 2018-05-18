@@ -8,6 +8,7 @@ public class WordFinder {
 	
 	private static ArrayList<String> listOfStrings = new ArrayList<String>();
 	private static int counter = 0;
+	private static HashTable tableOfWords = null;
 	
 	public static void main(String args[]) 
 	{		
@@ -17,12 +18,15 @@ public class WordFinder {
 		
 		inputWords("Dictionary.txt");
 		
+		//findWords();
+		
 	}
 	
 	public static void inputWords(String fileName) 
 	{
 		String passed = "aa";
 		int index = 0;
+		tableOfWords = new HashTable(300000);
 		
 		try
 		{
@@ -31,10 +35,10 @@ public class WordFinder {
 		while(read.ready())
 		{	
 			String word = read.readLine();
+			
+			tableOfWords.add(word);
+			
 			counter++;
-		
-			
-			
 		}
 		
 		}
@@ -46,7 +50,16 @@ public class WordFinder {
 		
 	}
 	
-
+	public static void findWords()
+	{
+		for(int i = 0; i < listOfStrings.size(); i++)
+		{
+			if(tableOfWords.find(listOfStrings.get(i)))
+			{
+				System.out.println(listOfStrings.get(i));
+			}
+		}
+	}
 	
 
 
