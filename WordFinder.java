@@ -2,63 +2,88 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
+
 
 public class WordFinder {
 	
 	
-	private static ArrayList<String> listOfStrings = new ArrayList<String>();
-	private static int counter = 0;
-	private static HashTable tableOfWords = null;
+	private static String[] list;
+	private static Hashtable<String, Integer> table;
+	private static int count = 0;
 	
 	public static void main(String args[]) 
 	{		
-		String input = "abb";
+		String input = "abcdefghij";
+		init(input.length());
 
 		findStrings(input,"","",input.length());
-		
 		inputWords("Dictionary.txt");
 		
-		//findWords();
 		
+		
+		findWords();
+		
+	}
+	
+	public static void init(int i)
+	{
+		count = 0;
+		list = new String[findArraySize(i)];
+		table = new Hashtable<String, Integer>();
 	}
 	
 	public static void inputWords(String fileName) 
 	{
-		String passed = "aa";
+
 		int index = 0;
-		tableOfWords = new HashTable(300000);
+
 		
 		try
 		{
 			BufferedReader read = new BufferedReader(new FileReader(fileName));
-		
-		while(read.ready())
-		{	
-			String word = read.readLine();
-			
-			tableOfWords.add(word);
-			
-			counter++;
-		}
+			while(read.ready())
+			{	
+				String word = read.readLine();
+				
+				table.put(word, index);
+				index++;
+			}
 		
 		}
 		catch(IOException e)
 		{
 			System.err.println("File Not Found");
 		}
-		
-		
 	}
 	
 	public static void findWords()
 	{
-		for(int i = 0; i < listOfStrings.size(); i++)
+		int i = 0;
+
+		while(i < list.length && list[i] != null)
 		{
-			if(tableOfWords.find(listOfStrings.get(i)))
+			if(table.get(list[i].toUpperCase()) != null)
 			{
-				System.out.println(listOfStrings.get(i));
+				System.out.println(list[i]);
 			}
+			
+			i++;
 		}
+	}
+	
+	private static int findArraySize(int i)
+	{
+		int total = i;
+		int last = i;
+	
+		for(int a = i - 1; a > 0; a--)
+		{
+			total += (last * a);
+			last = last * a;
+		}
+		
+		return total;
 	}
 	
 
@@ -90,7 +115,10 @@ public class WordFinder {
 				
 				if(!(duplicates.contains(letters.charAt(i) + "")))
 				{
-					listOfStrings.add(stringSoFar);
+					//listOfStrings.add(stringSoFar);
+					
+					list[count] = stringSoFar;
+					count++;
 					
 					String passed = letters.substring(0,i) + letters.substring(i + 1,letters.length());
 				
